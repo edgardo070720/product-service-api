@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(ApiPathConstans.V1_ROUTE+ApiPathConstans.PRODUCT_ROUTE)
 public interface IProductApi {
-    @PostMapping(value = "/create")
+    @PostMapping("/create")
     ResponseEntity<ProductModel> createProduct(
             @RequestBody ProductModel createProductRequest
     );
-    @GetMapping(value = "/{productId}")
+    @GetMapping("/{productId}")
     ResponseEntity<ProductModel> getProduct(
             @PathVariable long productId
     );
+    @PostMapping("/{productId}")
+    ResponseEntity<Void> updateProduct(@RequestBody ProductModel updateProduct,@PathVariable long productId);
 }

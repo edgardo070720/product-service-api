@@ -19,6 +19,13 @@ public class IProductController implements IProductApi {
 
     @Override
     public ResponseEntity<ProductModel> getProduct(long productId) {
-        return null;
+        ProductModel product=productService.getProduct(productId);
+        return ResponseEntity.ok(product);
+    }
+
+    @Override
+    public ResponseEntity<Void> updateProduct(ProductModel updateProduct, long productId) {
+        productService.updateProduct(updateProduct,productId);
+        return ResponseEntity.noContent().build();
     }
 }

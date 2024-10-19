@@ -23,7 +23,20 @@ public class IProductServiceImplement implements IProductService {
         return Optional.of(productId).flatMap(productRepository::findById).orElseThrow(()->new RuntimeException("error product not fond"));
     }
 
+    @Override
+    public void  updateProduct(ProductModel product, long productId) {
+        Optional.of(productId)
+                .map(this::getProduct)
+                .map(existProduct->updateFieldsProducts(existProduct,product))
+                .map(productRepository::save)
+                .orElseThrow(()->new RuntimeException("Error updating product"));
+    }
+
     private ProductModel mapToEntity(ProductModel productModel){
         return new ProductModel.productModelBuilder().nameProduct(productModel.getNameProduct()).build();
+    }
+    private  ProductModel updateFieldsProducts(ProductModel existProduct,ProductModel updateProductRequest){
+        existProduct.setNameProduct(updateProductRequest.getNameProduct());
+        return existProduct;
     }
 }
